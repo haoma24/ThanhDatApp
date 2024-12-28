@@ -20,6 +20,7 @@ namespace ThanhDatApp
         private string _branchid;
         AccountService _accountService;
         EmployeeService _employeeService;
+        thanhdatEntities db = new thanhdatEntities();
         public Main(string accountid, string branchid)
         {
             InitializeComponent();
@@ -27,8 +28,7 @@ namespace ThanhDatApp
             _employeeService = new EmployeeService();
             _accountid = accountid;
 
-            _empid = _accountService.Get(_accountid)
-                .SelectMany(a=>a.Employees)
+            _empid = db.Employees.Where(e=>e.AccountID==_accountid)
                 .Select(e=>e.EmployeeID)
                 .FirstOrDefault();
             _branchid = branchid;
@@ -93,6 +93,17 @@ namespace ThanhDatApp
         private void btnSP_Click(object sender, EventArgs e)
         {
             frmSanPham frm = new frmSanPham();
+            frm.TopLevel = false;
+            frm.Dock = DockStyle.Fill;
+            frm.FormBorderStyle = FormBorderStyle.None;
+            pnlLayout.Controls.Clear();
+            pnlLayout.Controls.Add(frm);
+            frm.Show();
+        }
+
+        private void btnTK_Click(object sender, EventArgs e)
+        {
+            frmTaiKhoan frm = new frmTaiKhoan();
             frm.TopLevel = false;
             frm.Dock = DockStyle.Fill;
             frm.FormBorderStyle = FormBorderStyle.None;

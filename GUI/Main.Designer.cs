@@ -172,6 +172,7 @@
             this.btnTK.Text = "       Tài khoản";
             this.btnTK.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnTK.UseVisualStyleBackColor = false;
+            this.btnTK.Click += new System.EventHandler(this.btnTK_Click);
             // 
             // btnNV
             // 

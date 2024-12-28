@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.pbQRThanhToan = new System.Windows.Forms.PictureBox();
+            this.cbbHTTT = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.rbtnNu = new System.Windows.Forms.RadioButton();
             this.rbtnNam = new System.Windows.Forms.RadioButton();
             this.label7 = new System.Windows.Forms.Label();
@@ -49,16 +52,17 @@
             this.lblTongTien = new System.Windows.Forms.Label();
             this.dgvSanPham = new System.Windows.Forms.DataGridView();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.label8 = new System.Windows.Forms.Label();
-            this.cbbHTTT = new System.Windows.Forms.ComboBox();
-            this.pbQRThanhToan = new System.Windows.Forms.PictureBox();
+            this.cbbPrinter = new System.Windows.Forms.ComboBox();
+            this.label9 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvSanPham)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbQRThanhToan)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSanPham)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.label9);
+            this.panel1.Controls.Add(this.cbbPrinter);
             this.panel1.Controls.Add(this.pbQRThanhToan);
             this.panel1.Controls.Add(this.cbbHTTT);
             this.panel1.Controls.Add(this.label8);
@@ -86,6 +90,36 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(600, 1033);
             this.panel1.TabIndex = 1;
+            // 
+            // pbQRThanhToan
+            // 
+            this.pbQRThanhToan.Location = new System.Drawing.Point(267, 598);
+            this.pbQRThanhToan.Name = "pbQRThanhToan";
+            this.pbQRThanhToan.Size = new System.Drawing.Size(268, 233);
+            this.pbQRThanhToan.TabIndex = 21;
+            this.pbQRThanhToan.TabStop = false;
+            this.pbQRThanhToan.Visible = false;
+            // 
+            // cbbHTTT
+            // 
+            this.cbbHTTT.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbbHTTT.FormattingEnabled = true;
+            this.cbbHTTT.Location = new System.Drawing.Point(10, 621);
+            this.cbbHTTT.Name = "cbbHTTT";
+            this.cbbHTTT.Size = new System.Drawing.Size(225, 30);
+            this.cbbHTTT.TabIndex = 20;
+            this.cbbHTTT.SelectedIndexChanged += new System.EventHandler(this.cbbHTTT_SelectedIndexChanged);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label8.Location = new System.Drawing.Point(15, 598);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(164, 20);
+            this.label8.TabIndex = 19;
+            this.label8.Text = "Hình thức thanh toán";
             // 
             // rbtnNu
             // 
@@ -141,7 +175,7 @@
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.DodgerBlue;
-            this.label6.Location = new System.Drawing.Point(6, 689);
+            this.label6.Location = new System.Drawing.Point(6, 730);
             this.label6.Name = "label6";
             this.label6.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
             this.label6.Size = new System.Drawing.Size(229, 20);
@@ -155,7 +189,7 @@
             this.btnThemKH.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnThemKH.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnThemKH.ForeColor = System.Drawing.Color.Transparent;
-            this.btnThemKH.Location = new System.Drawing.Point(10, 712);
+            this.btnThemKH.Location = new System.Drawing.Point(10, 753);
             this.btnThemKH.Name = "btnThemKH";
             this.btnThemKH.Size = new System.Drawing.Size(225, 42);
             this.btnThemKH.TabIndex = 13;
@@ -314,35 +348,25 @@
             this.flowLayoutPanel1.Size = new System.Drawing.Size(1102, 1033);
             this.flowLayoutPanel1.TabIndex = 2;
             // 
-            // label8
+            // cbbPrinter
             // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label8.Location = new System.Drawing.Point(15, 598);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(164, 20);
-            this.label8.TabIndex = 19;
-            this.label8.Text = "Hình thức thanh toán";
+            this.cbbPrinter.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbbPrinter.FormattingEnabled = true;
+            this.cbbPrinter.Location = new System.Drawing.Point(10, 687);
+            this.cbbPrinter.Name = "cbbPrinter";
+            this.cbbPrinter.Size = new System.Drawing.Size(225, 30);
+            this.cbbPrinter.TabIndex = 22;
             // 
-            // cbbHTTT
+            // label9
             // 
-            this.cbbHTTT.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbbHTTT.FormattingEnabled = true;
-            this.cbbHTTT.Location = new System.Drawing.Point(10, 621);
-            this.cbbHTTT.Name = "cbbHTTT";
-            this.cbbHTTT.Size = new System.Drawing.Size(225, 30);
-            this.cbbHTTT.TabIndex = 20;
-            this.cbbHTTT.SelectedIndexChanged += new System.EventHandler(this.cbbHTTT_SelectedIndexChanged);
-            // 
-            // pbQRThanhToan
-            // 
-            this.pbQRThanhToan.Location = new System.Drawing.Point(267, 598);
-            this.pbQRThanhToan.Name = "pbQRThanhToan";
-            this.pbQRThanhToan.Size = new System.Drawing.Size(268, 233);
-            this.pbQRThanhToan.TabIndex = 21;
-            this.pbQRThanhToan.TabStop = false;
-            this.pbQRThanhToan.Visible = false;
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label9.Location = new System.Drawing.Point(15, 664);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(58, 20);
+            this.label9.TabIndex = 23;
+            this.label9.Text = "Máy in";
             // 
             // frmBanHang
             // 
@@ -359,8 +383,8 @@
             this.Load += new System.EventHandler(this.frmBanHang_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvSanPham)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbQRThanhToan)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSanPham)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -390,5 +414,7 @@
         private System.Windows.Forms.ComboBox cbbHTTT;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.PictureBox pbQRThanhToan;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.ComboBox cbbPrinter;
     }
 }

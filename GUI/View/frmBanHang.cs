@@ -1,11 +1,15 @@
-﻿using System;
+﻿using PdfiumViewer;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
+using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,7 +22,7 @@ namespace ThanhDatApp.GUI.View
 {
     public partial class frmBanHang : Form
     {
-        private string url = "http://localhost/BaoCao/DemoReport/PhieuTamTinh";
+        private string url = "";
         private string _empid;
         private string _branchid;
         private ProductService _productService;
@@ -55,6 +59,7 @@ namespace ThanhDatApp.GUI.View
         private void frmBanHang_Load(object sender, EventArgs e)
         {
             loadSanPham();
+            LoadPrinters();
         }
         private void loadSanPham()
         {
@@ -64,6 +69,18 @@ namespace ThanhDatApp.GUI.View
             {
                 AddProductToPanel(item.ProductID,item.ProductName,1, string.Format("{0:C0}",item.UnitPrice), item.Image);
             }
+        }
+        public void LoadPrinters()
+        {
+            // Lấy danh sách máy in từ hệ thống
+            foreach (string printerName in PrinterSettings.InstalledPrinters)
+            {
+                cbbPrinter.Items.Add(printerName);
+            }
+
+            // Chọn máy in mặc định
+            var defaultPrinter = new PrinterSettings();
+            cbbPrinter.SelectedItem = defaultPrinter.PrinterName;
         }
         private void AddProductToPanel(string id,string name,int quantity, string price, string imagePath)
         {
@@ -197,53 +214,75 @@ namespace ThanhDatApp.GUI.View
         private void btnThuTien_Click(object sender, EventArgs e)
         {
             DialogResult rs = MessageBox.Show("Xác nhận khách hàng đã thanh toán đủ số tiền", "Xác nhận thanh toán?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-            if (_orderid=="")
-                _orderid = IdIncrementer.Get("Orders");
-
             if (rs == DialogResult.Yes)
             {
-
-                var newOrder = new Orders
+                if (_orderid == "")
                 {
-                    OrderID = _orderid,
-                    CustomerID = cbbTenKH.SelectedValue.ToString(),
-                    OrderDate = DateTime.Now,
-                    EmployeeID = _empid,
-                    DeliveryMethodID = "GHNTCH",
-                    PaymentID = cbbHTTT.SelectedValue.ToString(),
-                    Status = "Đã nhận",
-                    BranchID = _branchid,
-                    TotalAmount = _tongtien
-                };
-                _db.Orders.Add(newOrder);
-                _db.SaveChanges();
-                foreach(DataGridViewRow row in dgvSanPham.Rows){
-                    if (!row.IsNewRow) // Bỏ qua dòng mới
+                    _orderid = IdIncrementer.Get("Orders");
+                    var newOrder = new Orders
                     {
-                        // Lấy dữ liệu từ các cột
-                        string productCode = row.Cells["ProductCode"].Value?.ToString();
-                        int quantity = Convert.ToInt32(row.Cells["Quantity"].Value);
-                        double price = Convert.ToDouble(row.Cells["Price"].Value.ToString().Replace(".","").Replace("₫", ""));
-                        double total = quantity * price;
-
-                        // Tạo một đối tượng OrderDetail
-                        var detail = new OrderDetails
+                        OrderID = _orderid,
+                        CustomerID = cbbTenKH.SelectedValue.ToString(),
+                        OrderDate = DateTime.Now,
+                        EmployeeID = _empid,
+                        DeliveryMethodID = "GHNTCH",
+                        PaymentID = cbbHTTT.SelectedValue.ToString(),
+                        Status = "Đã nhận",
+                        BranchID = _branchid,
+                        TotalAmount = _tongtien
+                    };
+                    _db.Orders.Add(newOrder);
+                    _db.SaveChanges();
+                    foreach (DataGridViewRow row in dgvSanPham.Rows)
+                    {
+                        if (!row.IsNewRow) // Bỏ qua dòng mới
                         {
-                            OrderID = _orderid,
-                            ProductID = productCode,
-                            Quantity = quantity,
-                            UnitPrice = price,
+                            // Lấy dữ liệu từ các cột
+                            string productCode = row.Cells["ProductCode"].Value?.ToString();
+                            int quantity = Convert.ToInt32(row.Cells["Quantity"].Value);
+                            double price = Convert.ToDouble(row.Cells["Price"].Value.ToString().Replace(".", "").Replace("₫", ""));
+                            double total = quantity * price;
 
-                        };
+                            // Tạo một đối tượng OrderDetail
+                            var detail = new OrderDetails
+                            {
+                                OrderID = _orderid,
+                                ProductID = productCode,
+                                Quantity = quantity,
+                                UnitPrice = price,
 
-                        // Thêm vào danh sách
-                        _db.OrderDetails.Add(detail);
+                            };
+
+                            // Thêm vào danh sách
+                            _db.OrderDetails.Add(detail);
+                        }
                     }
                 }
+                
+                Clear();
                 MessageBox.Show("Đặt hàng hoàn tất", "Thông báo!");
             }
+            
+                
         }
-
+        public void Clear()
+        {
+            cbbHTTT.Text =
+                cbbTenKH.Text =
+                txtDiaChi.Text =
+                txtEmail.Text =
+                txtSDT.Text =
+                cbbTenKH.Text = "";
+            pbQRThanhToan.Image = null;
+            foreach (DataGridViewRow row in dgvSanPham.Rows)
+            {
+                if (!row.IsNewRow) // Không cho phép xóa dòng trống mới
+                {
+                    dgvSanPham.Rows.Remove(row);
+                    setTongTien();
+                }
+            }
+        }
         private void btnInHoaDon_Click(object sender, EventArgs e)
         {
             _orderid = IdIncrementer.Get("Orders");
@@ -278,51 +317,54 @@ namespace ThanhDatApp.GUI.View
                         ProductID = productCode,
                         Quantity = quantity,
                         UnitPrice = price,
-
+                        TotalPrice = total
                     };
 
                     // Thêm vào danh sách
                     _db.OrderDetails.Add(detail);
+                    
                 }
             }
-            url += "&OrderID="+_orderid+"&rs:Command=Render&rs:Format=PDF";
-            string printerName = "Tên_Máy_In"; // Tên máy in, ví dụ: "HP LaserJet 1100"
-
-            // Bước 1: Tải file PDF từ URL
-            byte[] pdfBytes = DownloadPdf(url);
-
-            if (pdfBytes != null)
+            _db.SaveChanges();
+            url = "https://localhost/BaoCao/Pages/ReportViewer.aspx?%2fDemoReport%2fPhieuTamTinh&OrderID="+_orderid+"&rs:Command=Render&rs:Format=PDF";
+            string printerName = cbbPrinter.SelectedItem?.ToString(); // Tên máy in, ví dụ: "HP LaserJet 1100"
+                                                                      // Tải file PDF
+            string tempFilePath = Path.Combine(Path.GetTempPath(), "temp.pdf");
+            using (var client = new WebClient())
             {
-                // Bước 2: Lưu file tạm để in
-                string tempFile = Path.Combine(Path.GetTempPath(), "temp.pdf");
-                File.WriteAllBytes(tempFile, pdfBytes);
-
-                // Bước 3: In file PDF
-                PrintPdf(tempFile, printerName);
-
-                // Xóa file tạm sau khi in
-                File.Delete(tempFile);
+                client.UseDefaultCredentials = true;
+                client.DownloadFile(url, tempFilePath);
             }
-            else
-            {
-                Console.WriteLine("Không thể tải file PDF từ URL.");
-            }
+
+            // Gửi file PDF tới máy in
+            PrintPDF(tempFilePath, printerName);
+
+            // Xóa file tạm sau khi in xong
+            File.Delete(tempFilePath);
+
         }
-        static byte[] DownloadPdf(string url)
+        private void PrintPDF(string filePath, string printerName)
         {
-            try
+            ProcessStartInfo printProcessInfo = new ProcessStartInfo
             {
-                using (HttpClient client = new HttpClient())
-                {
-                    return client.GetByteArrayAsync(url).Result;
-                }
-            }
-            catch (Exception ex)
+                Verb = "print",
+                FileName = filePath,
+                CreateNoWindow = true,
+                WindowStyle = ProcessWindowStyle.Hidden,
+                Arguments = $"/p /h \"{filePath}\" \"{printerName}\""
+            };
+
+            using (Process printProcess = new Process())
             {
-                Console.WriteLine($"Lỗi khi tải PDF: {ex.Message}");
-                return null;
+                printProcess.StartInfo = printProcessInfo;
+                printProcess.Start();
+                printProcess.WaitForExit();
             }
+
+            MessageBox.Show("In thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+        
+
 
         static void PrintPdf(string filePath, string printerName)
         {

@@ -165,9 +165,9 @@
             this.label1.Location = new System.Drawing.Point(6, 7);
             this.label1.Name = "label1";
             this.label1.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
-            this.label1.Size = new System.Drawing.Size(145, 24);
+            this.label1.Size = new System.Drawing.Size(129, 24);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Mã khách hàng";
+            this.label1.Text = "Mã nhân viên";
             // 
             // label2
             // 
