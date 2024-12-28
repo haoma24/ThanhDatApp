@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="fd847a490b3c4c728d05ae75a84ca873" Name="Diagram1">
+        <EntityTypeShape EntityType="thanhdatModel.Accounts" Width="1.5" PointX="1.5" PointY="22.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="thanhdatModel.Branches" Width="1.5" PointX="0.75" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="thanhdatModel.Categories" Width="1.5" PointX="0.75" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="thanhdatModel.Customers" Width="1.5" PointX="0.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="thanhdatModel.DeliveryMethod" Width="1.5" PointX="0.75" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="thanhdatModel.Employees" Width="1.5" PointX="0.75" PointY="25.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="thanhdatModel.Inventory" Width="1.5" PointX="5.25" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="thanhdatModel.OrderDetails" Width="1.5" PointX="5.25" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="thanhdatModel.Orders" Width="1.5" PointX="3" PointY="16.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="thanhdatModel.Payment" Width="1.5" PointX="0.75" PointY="30.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="thanhdatModel.Products" Width="1.5" PointX="3" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="thanhdatModel.Promotions" Width="1.5" PointX="5.25" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="thanhdatModel.ReceiptDetails" Width="1.5" PointX="5.25" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="thanhdatModel.Receipts" Width="1.5" PointX="3" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="thanhdatModel.Wishlist" Width="1.5" PointX="8.25" PointY="7.25" IsExpanded="true" />
+        <AssociationConnector Association="thanhdatModel.FK__Customers__Accou__611C5D5B" ManuallyRouted="false" />
+        <AssociationConnector Association="thanhdatModel.FK__Employees__Accou__64ECEE3F" ManuallyRouted="false" />
+        <AssociationConnector Association="thanhdatModel.FK__Employees__Branc__65E11278" ManuallyRouted="false" />
+        <AssociationConnector Association="thanhdatModel.FK__Inventory__Branc__5C57A83E" ManuallyRouted="false" />
+        <AssociationConnector Association="thanhdatModel.FK__Orders__BranchID__6D823440" ManuallyRouted="false" />
+        <AssociationConnector Association="thanhdatModel.FK__Receipts__Branch__742F31CF" ManuallyRouted="false" />
+        <AssociationConnector Association="thanhdatModel.FK__Products__Catego__55AAAAAF" ManuallyRouted="false" />
+        <AssociationConnector Association="thanhdatModel.FK__Orders__Customer__6B99EBCE" ManuallyRouted="false" />
+        <AssociationConnector Association="thanhdatModel.FK__Wishlist__Custom__04659998" ManuallyRouted="false" />
+        <AssociationConnector Association="thanhdatModel.FK__Orders__Delivery__6AA5C795" ManuallyRouted="false" />
+        <AssociationConnector Association="thanhdatModel.FK__Orders__Employee__6C8E1007" ManuallyRouted="false" />
+        <AssociationConnector Association="thanhdatModel.FK__Receipts__Employ__75235608" ManuallyRouted="false" />
+        <AssociationConnector Association="thanhdatModel.FK__Inventory__Produ__5D4BCC77" ManuallyRouted="false" />
+        <AssociationConnector Association="thanhdatModel.FK__OrderDeta__Order__705EA0EB" ManuallyRouted="false" />
+        <AssociationConnector Association="thanhdatModel.FK__OrderDeta__Produ__7152C524" ManuallyRouted="false" />
+        <AssociationConnector Association="thanhdatModel.FK__Orders__PaymentI__69B1A35C" ManuallyRouted="false" />
+        <AssociationConnector Association="thanhdatModel.FK__ReceiptDe__Produ__78F3E6EC" ManuallyRouted="false" />
+        <AssociationConnector Association="thanhdatModel.FK__Wishlist__Produc__0371755F" ManuallyRouted="false" />
+        <AssociationConnector Association="thanhdatModel.FK__ReceiptDe__Recei__77FFC2B3" ManuallyRouted="false" />
+        <AssociationConnector Association="thanhdatModel.ProductPromotions" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
